@@ -1,0 +1,11 @@
+{
+ "name": "example-language-babel",
+ "version": "1.0.0",
+ "description": "Language Babel Example",
+ "license": "MIT",
+ "devDependencies": {
+    "babel-core": "^6.0.20",
+    "babel-preset-env": "^1.6.0",
+    "babel-plugin-syntax-flow": "^6.0.0"
+  }
+}
