@@ -1,11 +1,18 @@
 {
- "name": "example-language-babel",
- "version": "1.0.0",
- "description": "Language Babel Example",
- "license": "MIT",
- "devDependencies": {
-    "babel-core": "^6.0.20",
-    "babel-preset-env": "^1.6.0",
-    "babel-plugin-syntax-flow": "^6.0.0"
+  "name": "rulatex",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "webpack": "webpack",
+    "start": "static"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "node-static": "^0.7.10",
+    "webpack": "^3.6.0"
   }
 }
