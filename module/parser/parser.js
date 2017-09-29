@@ -1,16 +1,15 @@
 class Parser {
-  constructor(latex) {
-    this.latex = latex;
+  constructor() {
     this.regulars = [
       {
         // abs
         regEx: /\\left\|(((?!(\\left\||\\right\|)).)+)\\right\|/,
         replaceHandler: function (matches) {
-          return ``
+          return `<span>|</span>${matches[1]}<span>|</span>`
         }
       },
       {
-        //square brackets
+        // brackets
         regEx: /\\left([\(\[])((?:(?!(?:\\left[\(\[]|\\right[\)\]])).)+)\\right([\)\]])/,
         replaceHandler: function (matches) {
           return `${matches[1]}${matches[2]}${matches[3]}`
@@ -95,43 +94,30 @@ class Parser {
   }
 
   parse(latex) {
+    let _self = this;
     let parse_inner = function (latex) {
-      this.regulars.forEach(function (value, index) {
-        console.group("%c Custom log:", "background: #222; color: #bada55; font-size: 16px;");
-        console.log(value, index);
-        console.groupEnd();
+      _self.regulars.forEach(function (regexObj, index) {
+        if (regexObj.regEx.test(latex)) {
+          _self.regIndex = index;
+          return false;
+        } else {
+          _self.regIndex = false;
+        }
       });
+
+      if (_self.regIndex) {
+        // Если совпадения были найдены, то произведем замену первого вхождения подстроки
+        // на строку удовлетворяющую синтаксису math.js
+        latex = latex.replace(_self.regulars[_self.regIndex].regEx, function (matches) {
+          return _self.regulars[_self.regIndex].replaceHandler(matches);
+        });
+        parse_inner(latex);
+      } else {
+        return latex;
+      }
     };
 
-    parse_inner
-
-    // FIXME: bad or coffee?
-    // for (let i = 0; i < regex) of regex_set
-    //   match = latex.match(regex)
-    //   if match then current_key = key
-
-    // if current_key and replace_behaviour[current_key]
-    //   # Если совпадения были найдены, то произведем замену первого вхождения подстроки
-    //   # на строку удовлетворяющую синтаксису math.js
-    //   latex = latex.replace regex_set[current_key], (matches...) =>
-    //     return replace_behaviour[current_key](matches)
-    //
-    //   parse_latex_recoursive latex
-    // else
-    //   ## Если совпадения не были найдены, то выходим из рекурсии
-    //   latex = latex.replace /([a-z]+)(\()?/gi, (match, _a, _b) ->
-    //     ## Далее мы должны проверить есть ли в выражении буквенные последовательности
-    //     ## типа `ab` которые должны быть эквивалентны `a*b`
-    //     spec = [
-    //       "abs", "sqrt", "Infinity", "left", "right", "math", "pi",
-    //       "sin", "cos", "unit", "deg"
-    //     ]
-    //     if match.length > 1 and (_a not in spec)
-    //       match = match.split("").join("*")
-    //       return match
-    //     else
-    //       return match
-    //   return latex
+    parse_inner(latex);
   };
 }
 

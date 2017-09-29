@@ -1,30 +1,30 @@
-import { ruLatex } from './module/rulatex.js';
+import { RuLatex } from './module/rulatex.js';
 
 ;(function ($) {
-  const latex = new ruLatex()
-  let regulars = latex.getParser().regulars;
+  const ruLatex = new RuLatex()
 
-  console.log(latex);
-  console.log(regulars);
+  console.group("%c Custom log:", "background: #222; color: #bada55; font-size: 16px;");
+  console.log(ruLatex.parse("\\left|x\\right|^{4}+\\left(\\frac{\\sqrt{x}}{4}\\right)^{3}+x^{\\frac{3}{4}}"));
+  console.groupEnd();
 
-  // var $mainBlock = $(".js-main-block"),
-  //     testLatex = [
-  //       "\\infty ∪ℤℝℚℕπ∈∫→←⇒⇔∅",
-  //       "\\left\\{-\\infty; 2\\right]\\cup{3}\\cup(8;+\\infty)",
-  //       "\\frac{\\infty}{-\\infty} + \\infty - 2 -\\infty",
-  //       "\\sqrt{\\sqrt{16}} + \\sqrt{\\frac{2}{3}}",
-  //       "\\left|x\\right|^{4}+\\left(\\frac{\\sqrt{x}}{4}\\right)^{3}+x^{\\frac{3}{4}}",
-  //       "ax^2 + bx + c \\ge 0",
-  //       "f\\left(x\\right)=12{x}^{2}+21",
-  //       "r\\left(-x\\right)=3x^{3\\frac{3}{2}}",
-  //       "17,345  \\approx 17,35",
-  //       "\\frac{a}{b} : \\frac{b}{a} = \\frac{a\\cdot b}{b\\cdot a}",
-  //     ];
-  //
-  // for (var i = 0, l = testLatex.length; i < l; i++) {
-  //   $line = $("<div class='line'>");
-  //   $line
-  //     .append(testLatex[i])
-  //     .appendTo($mainBlock);
-  // }
+  var $mainBlock = $(".js-main-block"),
+      testLatex = [
+        "\\infty ∪ℤℝℚℕπ∈∫→←⇒⇔∅",
+        "\\left\\{-\\infty; 2\\right]\\cup{3}\\cup(8;+\\infty)",
+        "\\frac{\\infty}{-\\infty} + \\infty - 2 -\\infty",
+        "\\sqrt{\\sqrt{16}} + \\sqrt{\\frac{2}{3}}",
+        "\\left|x\\right|^{4}+\\left(\\frac{\\sqrt{x}}{4}\\right)^{3}+x^{\\frac{3}{4}}",
+        "ax^2 + bx + c \\ge 0",
+        "f\\left(x\\right)=12{x}^{2}+21",
+        "r\\left(-x\\right)=3x^{3\\frac{3}{2}}",
+        "17,345  \\approx 17,35",
+        "\\frac{a}{b} : \\frac{b}{a} = \\frac{a\\cdot b}{b\\cdot a}",
+      ];
+
+  for (let i = 0, l = testLatex.length; i < l; i++) {
+    let $line = $("<div class='line'>");
+    $line
+      .append(testLatex[i])
+      .appendTo($mainBlock);
+  }
 })(jQuery)
