@@ -1,4 +1,5 @@
 import { Parser } from './parser/parser.js';
+import './rulatex.css'
 
 class RuLatex {
   constructor() {

@@ -6,7 +6,7 @@ class Parser {
         // abs
         regEx: /\\left\|(((?!(\\left\||\\right\|)).)+)\\right\|/,
         replaceHandler: function (matches) {
-          return `<span>|</span>${matches[1]}<span>|</span>`;
+          return `<span class="rlp-node">|</span>${matches[1]}<span class="rlp-node">|</span>`;
         }
       },
       {
