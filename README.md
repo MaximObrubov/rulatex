@@ -9,14 +9,14 @@ https://medium.com/@arashsaidi/writing-es6-with-the-atom-editor-fafe2b9b5710 -->
 ## [Webpack + babel + node-static](http://ccoenraets.github.io/es6-tutorial-data/babel-webpack/)
 Процесс установки/настройки:
 - устанавливаем пакеты (вместо http-server используем node-static)
-```
+```shell
 npm install babel-core babel-loader babel-preset-es2015 webpack node-static
 ```
 
 - подключаем конфиг для webpack *webpack.js.config*
 
 Входные файлы будут подключены в соответствии с матчем по "index*" (поэтому пока используется *index.js*). Итоговый файл *app.js* компилится в директорию */build*. Параметр `devtool` пока хз зачем.
-```coffee
+```js
 var path = require('path');
 var webpack = require('webpack');
 
@@ -40,15 +40,15 @@ module.exports = {
   stats: {
     colors: true
   },
-  devtool: 'source-map'
+  devtool: 'eval',
+  watch: true
 };
-
 ```
 - подключаем зависимости в *package.json*
 ```json
 "scripts": {
-    "webpack": "webpack",
-    "start": "static"
+  "webpack": "webpack",
+  "start": "static"
 }
 ```
 
@@ -56,5 +56,4 @@ module.exports = {
 - компиляция: `./compile`
 - запуск: `./run`
 
-Текущие проблемы:
-- нет компиляции на лету
+<!-- Текущие проблемы: -->
