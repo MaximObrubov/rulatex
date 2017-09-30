@@ -6,89 +6,93 @@ class Parser {
         // abs
         regEx: /\\left\|(((?!(\\left\||\\right\|)).)+)\\right\|/,
         replaceHandler: function (matches) {
-          return `<span>|</span>${matches[1]}<span>|</span>`
+          return `<span>|</span>${matches[1]}<span>|</span>`;
         }
       },
       {
         // brackets
         regEx: /\\left([\(\[])((?:(?!(?:\\left[\(\[]|\\right[\)\]])).)+)\\right([\)\]])/,
         replaceHandler: function (matches) {
-          return `${matches[1]}${matches[2]}${matches[3]}`
+          return `${matches[1]}${matches[2]}${matches[3]}`;
         }
       },
       {
         // curly brackets
         regEx: /\\left\\{((?:(?!(?:\\left\\{|\\right\\})).)+)\\right\\}/,
         replaceHandler: function (matches) {
-          return ``
+          return `{${matches[1]}}`;
         }
       },
       {
         // fraction
         regEx: /(\w+)?\\frac\{([^{}]+)\}\{([^{}]+)\}/,
         replaceHandler: function (matches) {
-          return ``
+          if (typeof matches[1] != "undefined")
+            return `(${matches[1]}+((${matches[2]})/(${matches[3]})))`;
+          else
+            return `((${matches[2]})/(${matches[3]}))`;
         }
       },
       {
+        // sqrt
         regEx: /\\sqrt\{([^{}]+)\}/,
         replaceHandler: function (matches) {
-          return ``
+          return `(sqrt(${matches[1]}))`;
         }
       },
       {
         regEx: /\\sqrt\[([^\[\]]+)\]\{([^{}]+)\}/,
         replaceHandler: function (matches) {
-          return ``
+          return ``;
         }
       },
       {
         regEx: /\\cdot/,
         replaceHandler: function (matches) {
-          return ``
-        }
-      },
-      {
-        regEx: /\\cdot/,
-        replaceHandler: function (matches) {
-          return ``
+          return `*`;
         }
       },
       {
         regEx: /\\le(?!ft)/,
         replaceHandler: function (matches) {
-          return ``
+          return `<=`;
         }
       },
       {
         regEx: /\\ge/,
         replaceHandler: function (matches) {
-          return ``
+          return `>=`;
         }
       },
       {
         // power
         regEx: /\^(?:\{([^{}]+)\}|(\d+))/,
         replaceHandler: function (matches) {
-            return ``
+          if (matches[1]) {
+            return `^(${matches[1]})`;
+          } else if (matches[2]) {
+            return `^(${matches[2]})`;
+          } else {
+            return ``;
+          }
         }
       },
       {
         regEx: /\\infty/,
         replaceHandler: function (matches) {
-          return ``
+          return `(Infinity)`;
         }
       },
       {
         regEx: /\\pi/,
         replaceHandler: function (matches) {
-          return ``
+          return `(Math.PI)`;
         }
       },
       {
         regEx: /\\(sin|cos|tg|ctg)\\left\(([^()]*)\\right\)/,
         replaceHandler: function (matches) {
-          return ``
+          return ``;
         }
       }
     ];
