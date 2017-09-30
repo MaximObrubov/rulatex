@@ -1,16 +1,10 @@
 # rulatex
 
-<!-- language-babel расширение для Atom
-`npm install --only=dev` для установки всех зависимостей
-
-** настраивал по этой ссылке
-https://medium.com/@arashsaidi/writing-es6-with-the-atom-editor-fafe2b9b5710 -->
-
 ## [Webpack + babel + node-static](http://ccoenraets.github.io/es6-tutorial-data/babel-webpack/)
 Процесс установки/настройки:
 - устанавливаем пакеты (вместо http-server используем node-static)
 ```shell
-npm install babel-core babel-loader babel-preset-es2015 webpack node-static
+npm install
 ```
 
 - подключаем конфиг для webpack *webpack.js.config*
