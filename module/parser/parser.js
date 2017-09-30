@@ -1,5 +1,6 @@
 class Parser {
   constructor() {
+    this.regIndex = -1;
     this.regulars = [
       {
         // abs
@@ -90,34 +91,37 @@ class Parser {
           return ``
         }
       }
-    ]
+    ];
   }
 
   parse(latex) {
     let _self = this;
     let parse_inner = function (latex) {
-      _self.regulars.forEach(function (regexObj, index) {
+      for (let [index, regexObj] of _self.regulars.entries()) {
         if (regexObj.regEx.test(latex)) {
           _self.regIndex = index;
-          return false;
+          break;
         } else {
-          _self.regIndex = false;
+          _self.regIndex = -1;
         }
-      });
+      }
 
-      if (_self.regIndex) {
+      if (_self.regIndex > -1) {
         // Если совпадения были найдены, то произведем замену первого вхождения подстроки
         // на строку удовлетворяющую синтаксису math.js
-        latex = latex.replace(_self.regulars[_self.regIndex].regEx, function (matches) {
-          return _self.regulars[_self.regIndex].replaceHandler(matches);
-        });
-        parse_inner(latex);
+        latex = latex.replace(
+          _self.regulars[_self.regIndex].regEx, function (...matches) {
+            return _self.regulars[_self.regIndex].replaceHandler(matches);
+          }
+        );
+
+        return parse_inner(latex);
       } else {
         return latex;
       }
     };
 
-    parse_inner(latex);
+    return parse_inner(latex);
   };
 }
 
