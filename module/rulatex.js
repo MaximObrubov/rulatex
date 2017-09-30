@@ -11,4 +11,6 @@ class RuLatex {
   }
 };
 
-export { RuLatex };
+// TODO: временное решение, почему то в собранном файле нет возможности прокинуть наружу
+// класс
+window.RuLatex = RuLatex;

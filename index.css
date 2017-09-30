@@ -1,0 +1,25 @@
+.container {
+  margin: 100px auto 0;
+  width: 600px;
+  color: #202026;
+}
+
+.line {
+  border-bottom: 1px solid;
+}
+
+.line .left, .line .right {
+  width: 50%;
+  padding: 5px;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.line .left {
+  background: #b7f695;
+  border-right: 1px solid;
+}
+.line .right {
+  background: #93f465;
+}

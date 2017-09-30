@@ -2,10 +2,10 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './index',
+  entry: './module/rulatex',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'app.js'
+    filename: 'rulatex-compiled.js'
   },
   module: {
     loaders: [
