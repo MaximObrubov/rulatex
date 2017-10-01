@@ -31,19 +31,23 @@ class Parser {
       "root": {
         regEx: /\\sqrt\{([^{}]+)\}/,
         replaceHandler: function (matches) {
-          return `(sqrt(${matches[1]}))`;
+          let _s = `<div class="rlp-node radic">
+                      <div class="rlp-node radic-sign">\u221A</div>
+                      <div class="rlp-node radic-inner">${matches[1]}</div>
+                    </div>`;
+          return _s;
         }
       },
-      "nth_root": {
-        regEx: /\\sqrt\[([^\[\]]+)\]\{([^{}]+)\}/,
-        replaceHandler: function (matches) {
-          return ``;
-        }
-      },
+      // "nth_root": {
+      //   regEx: /\\sqrt\[([^\[\]]+)\]\{([^{}]+)\}/,
+      //   replaceHandler: function (matches) {
+      //     return ``;
+      //   }
+      // },
       "multiply": {
         regEx: /\\cdot/,
         replaceHandler: function (matches) {
-          return `<div class="rlp-node">&middot;<div>`;
+          return `<div class="rlp-node">&middot;</div>`;
         }
       },
       "lower_or_equal": {
@@ -80,7 +84,7 @@ class Parser {
       "pi": {
         regEx: /\\pi/,
         replaceHandler: function (matches) {
-          return `(Math.PI)`;
+          return `<div class="rlp-node radic-sign">\u03A0</div>`;
         }
       }
     };

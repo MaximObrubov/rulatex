@@ -19,7 +19,10 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
-      }
+      },
+      // TODO: add fonts to webpack somehow
+      // url-loader work as good as shit
+      // { test: /\.(woff|woff2|eot|ttf|svg)(\?|$)/, use: 'url-loader?limit=100000&name=[name].[ext]' }
     ]
   },
   stats: {
