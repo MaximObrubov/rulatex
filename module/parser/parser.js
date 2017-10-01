@@ -1,30 +1,25 @@
 class Parser {
   constructor() {
-    this.regIndex = -1;
-    this.regulars = [
-      {
-        // abs
+    this.regulars = {
+      "abs": {
         regEx: /\\left\|(((?!(\\left\||\\right\|)).)+)\\right\|/,
         replaceHandler: function (matches) {
-          return `<span class="rlp-node">|</span>${matches[1]}<span class="rlp-node">|</span>`;
+          return `<div class="rlp-node">|</div>${matches[1]}<div class="rlp-node">|</div>`;
         }
       },
-      {
-        // brackets
+      "brackets": {
         regEx: /\\left([\(\[])((?:(?!(?:\\left[\(\[]|\\right[\)\]])).)+)\\right([\)\]])/,
         replaceHandler: function (matches) {
           return `${matches[1]}${matches[2]}${matches[3]}`;
         }
       },
-      {
-        // curly brackets
+      "curly_brackets": {
         regEx: /\\left\\{((?:(?!(?:\\left\\{|\\right\\})).)+)\\right\\}/,
         replaceHandler: function (matches) {
           return `{${matches[1]}}`;
         }
       },
-      {
-        // fraction
+      "fraction": {
         regEx: /(\w+)?\\frac\{([^{}]+)\}\{([^{}]+)\}/,
         replaceHandler: function (matches) {
           if (typeof matches[1] != "undefined")
@@ -33,99 +28,92 @@ class Parser {
             return `((${matches[2]})/(${matches[3]}))`;
         }
       },
-      {
-        // sqrt
+      "root": {
         regEx: /\\sqrt\{([^{}]+)\}/,
         replaceHandler: function (matches) {
           return `(sqrt(${matches[1]}))`;
         }
       },
-      {
+      "nth_root": {
         regEx: /\\sqrt\[([^\[\]]+)\]\{([^{}]+)\}/,
         replaceHandler: function (matches) {
           return ``;
         }
       },
-      {
+      "multiply": {
         regEx: /\\cdot/,
         replaceHandler: function (matches) {
-          return `*`;
+          return `<div class="rlp-node">&middot;<div>`;
         }
       },
-      {
+      "lower_or_equal": {
         regEx: /\\le(?!ft)/,
         replaceHandler: function (matches) {
-          return `<=`;
+          return `<div class="rlp-node">&le;</div>`;
         }
       },
-      {
+      "greater_or_equal": {
         regEx: /\\ge/,
         replaceHandler: function (matches) {
-          return `>=`;
+          return `<div class="rlp-node">&ge;</div>`;
         }
       },
-      {
-        // power
+      "power": {
         regEx: /\^(?:\{([^{}]+)\}|(\d+))/,
         replaceHandler: function (matches) {
-          if (matches[1]) {
-            return `^(${matches[1]})`;
-          } else if (matches[2]) {
-            return `^(${matches[2]})`;
-          } else {
-            return ``;
-          }
+          return ``;
+          // if (matches[1]) {
+          //   return `^(${matches[1]})`;
+          // } else if (matches[2]) {
+          //   return `^(${matches[2]})`;
+          // } else {
+          //   return ``;
+          // }
         }
       },
-      {
+      "infty": {
         regEx: /\\infty/,
         replaceHandler: function (matches) {
           return `(Infinity)`;
         }
       },
-      {
+      "pi": {
         regEx: /\\pi/,
         replaceHandler: function (matches) {
           return `(Math.PI)`;
         }
-      },
-      {
-        regEx: /\\(sin|cos|tg|ctg)\\left\(([^()]*)\\right\)/,
-        replaceHandler: function (matches) {
-          return ``;
-        }
       }
-    ];
+    };
   }
 
   parse(latex) {
     let _self = this;
-    let parse_inner = function (latex) {
-      for (let [index, regexObj] of _self.regulars.entries()) {
+
+    function parse_recoursive(latex) {
+      let foundedKey = null;
+
+      for (let [key, regexObj] of Object.entries(_self.regulars)) {
         if (regexObj.regEx.test(latex)) {
-          _self.regIndex = index;
+          foundedKey = key;
           break;
-        } else {
-          _self.regIndex = -1;
         }
       }
 
-      if (_self.regIndex > -1) {
-        // Если совпадения были найдены, то произведем замену первого вхождения подстроки
-        // на строку удовлетворяющую синтаксису math.js
+      if (foundedKey) {
+        // Если совпадения были найдены, то произведем замену первого
+        // вхождения подстроки на html
         latex = latex.replace(
-          _self.regulars[_self.regIndex].regEx, function (...matches) {
-            return _self.regulars[_self.regIndex].replaceHandler(matches);
+          _self.regulars[foundedKey].regEx, function (...matches) {
+            return _self.regulars[foundedKey].replaceHandler(matches);
           }
         );
-
-        return parse_inner(latex);
+        return parse_recoursive(latex);
       } else {
         return latex;
       }
     };
 
-    return parse_inner(latex);
+    return parse_recoursive(latex);
   };
 }
 
