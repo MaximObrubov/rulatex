@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: './module/rulatex',
@@ -8,23 +9,33 @@ module.exports = {
     filename: 'rulatex-compiled.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        query: {
+        options: {
           presets: ['es2015']
         }
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
       },
-      // TODO: add fonts to webpack somehow
-      // url-loader work as good as shit
-      // { test: /\.(woff|woff2|eot|ttf|svg)(\?|$)/, use: 'url-loader?limit=100000&name=[name].[ext]' }
+      {
+        test: /\.(woff|woff2|eot|svg|ttf|otf)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]'
+        }
+      }
     ]
   },
+  plugins: [
+    new ExtractTextPlugin('rulatex-compiled.css')
+  ],
   stats: {
     colors: true
   },

@@ -13,35 +13,51 @@ npm install
 ```js
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: './index',
+  entry: './module/rulatex',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'app.js'
+    filename: 'rulatex-compiled.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        query: {
+        options: {
           presets: ['es2015']
         }
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
+      },
+      {
+        test: /\.(woff|woff2|eot|svg|ttf|otf)$/,
+        use: ['file-loader']
       }
     ]
   },
+  plugins: [
+    new ExtractTextPlugin('rulatex-compiled.css')
+  ],
   stats: {
     colors: true
   },
   devtool: 'eval',
   watch: true
 };
+
 ```
 - подключаем зависимости в *package.json*
 ```json
 "scripts": {
-  "webpack": "webpack",
+  "build": "webpack",
   "start": "static"
 }
 ```
@@ -49,5 +65,3 @@ module.exports = {
 Запуск:
 - компиляция: `./compile`
 - запуск: `./run`
-
-<!-- Текущие проблемы: -->

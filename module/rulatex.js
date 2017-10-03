@@ -1,5 +1,6 @@
 import { Parser } from './parser/parser.js';
-import './rulatex.css'
+// подключаем css, требование webpack
+import './rulatex.scss';
 
 class RuLatex {
   constructor() {
