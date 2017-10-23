@@ -1,18 +1,21 @@
 class Templater {
   constructor() {
+    this.counter = 0;
     this.templates = {
-      "abs": "<div class=\"rlp-bracket\">|</div>$m1<div class=\"rlp-bracket\">|</div>",
+      "abs": "<div class=\"rl-bracket\">|</div>$m1<div class=\"rl-bracket\">|</div>",
       "brackets": "$m1$m2$m3",
       "curly_brackets": "{$m1}",
-      "fraction": "$m1$m2/$m3",
-      "root": `<div class="rlp-node radic">
-                  <div class="rlp-node radic-sign">\u221A</div>
-                  <div class="rlp-node radic-inner">$m1</div>
-              </div>`,
+      "fraction":  `$m1
+                    <div class="rl-fraction">
+                      <div class="rl-numerator">$m2</div>
+                      <div class="rl-denominator">$m3</div>
+                    </div>`,
+      "root": `<div class="rl-radic-sign">\u221A</div>
+               <div class="rl-radic-inner">$m1</div>`,
       "multiply": "&middot",
       "lower_or_equal": "&le;",
       "greater_or_equal": "&ge;",
-      "power": `<sup>$m1</sup>`,
+      "power": `<div class="rl-sup">$m1</div>`,
       "infty": `infty`,
       "pi": "&pi;"
     };
@@ -33,7 +36,11 @@ class Templater {
         idx++;
       }
     }
-    return targetString;
+    return this.wrapNode(targetString);
+  }
+
+  wrapNode(string) {
+    return `<div class="rl-node" data-id="${this.counter++}">${string}</div>`
   }
 }
 

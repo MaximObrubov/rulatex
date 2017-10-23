@@ -9,16 +9,44 @@
   font-style: normal;
 }
 
-.rlp-node {
-  font-family: 'DejavuSans';
-  background: red;
-  display: inline-block;
+$main_class: "rl";
 
-  &.radic {
-    background: green;
+.#{$main_class}-main {
+  .#{$main_class}-node {
+    font-family: 'DejavuSans';
+    background: #b087a7;
+    display: inline-block;
+    text-align: center;
+
+    div {
+      display: inline-block;
+    }
+
+    .#{$main_class}-bracket {
+      display: inline-block;
+    }
+
+    .#{$main_class}-fraction {
+      display: inline-block;
+      vertical-align: middle;
+      .#{$main_class}-numerator {
+        border-bottom: 0.1em solid black;
+        display: block;
+      }
+      .#{$main_class}-denominator {
+        display: block;
+      }
+    }
+    .#{$main_class}-radic-sign {
+      display: inline-block;
+    }
+    .#{$main_class}-rl-radic-inner {
+      display: inline-block;
+    }
+    .#{$main_class}-sup {
+      font-size: 66%;
+      vertical-align: 1em;
+      display: inline-block;
+    }
   }
-}
-
-.rlp-bracket {
-  display: inline-block;
 }
