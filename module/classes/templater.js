@@ -1,4 +1,4 @@
-class Operand {
+class Templater {
   constructor() {
     this.views = {
       "abs": `<div class="rlp-node">|</div>$m1<div class="rlp-node">|</div>`,

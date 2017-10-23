@@ -1,7 +1,8 @@
-import { Operand } from './operand.js';
+import { Operand } from './templater.js';
 
 class Parser {
   constructor() {
+    this.templater = new Templater()
     this.regulars = {
       "abs":  regEx: /\\left\|(((?!(\\left\||\\right\|)).)+)\\right\|/,
       "brackets": regEx: /\\left([\(\[])((?:(?!(?:\\left[\(\[]|\\right[\)\]])).)+)\\right([\)\]])/,
@@ -34,12 +35,18 @@ class Parser {
       if (foundedKey) {
         // Если совпадения были найдены, то произведем замену первого
         // вхождения подстроки на html
-        latex = latex.replace( that.regulars[foundedKey]
+        latex = latex.replace(that.regulars[foundedKey], function (...matches) {
 
-          that.regulars[foundedKey].regEx, function (...matches) {
-            return that.regulars[foundedKey].replaceHandler(matches);
-          }
-        );
+          console.group("%c Custom log:", "background: #222; color: #bada55; font-size: 16px;");
+          console.log(matches);
+          console.groupEnd();
+
+          matches.forEach(index, match)
+
+          targetString = that.templater[foundedKey]
+
+          return that.regulars[foundedKey].replaceHandler(matches);
+        });
         return parse_recoursive(latex);
       } else {
         return latex;
