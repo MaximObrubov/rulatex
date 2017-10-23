@@ -1,13 +1,13 @@
-import { Operand } from './templater.js';
+import { Templater } from './templater.js';
 
 class Parser {
   constructor() {
-    this.templater = new Templater()
+    this.templater = new Templater();
     this.regulars = {
-      "abs":  regEx: /\\left\|(((?!(\\left\||\\right\|)).)+)\\right\|/,
-      "brackets": regEx: /\\left([\(\[])((?:(?!(?:\\left[\(\[]|\\right[\)\]])).)+)\\right([\)\]])/,
+      "abs": /\\left\|(((?!(\\left\||\\right\|)).)+)\\right\|/,
+      "brackets": /\\left([\(\[])((?:(?!(?:\\left[\(\[]|\\right[\)\]])).)+)\\right([\)\]])/,
       "curly_brackets": /\\left\\{((?:(?!(?:\\left\\{|\\right\\})).)+)\\right\\}/,
-      "fraction": regEx: /(\w+)?\\frac\{([^{}]+)\}\{([^{}]+)\}/,
+      "fraction": /(\w+)?\\frac\{([^{}]+)\}\{([^{}]+)\}/,
       "root": /\\sqrt\{([^{}]+)\}/,
       "nth_root": /\\sqrt\[([^\[\]]+)\]\{([^{}]+)\}/,
       "multiply": /\\cdot/,
@@ -36,16 +36,7 @@ class Parser {
         // Если совпадения были найдены, то произведем замену первого
         // вхождения подстроки на html
         latex = latex.replace(that.regulars[foundedKey], function (...matches) {
-
-          console.group("%c Custom log:", "background: #222; color: #bada55; font-size: 16px;");
-          console.log(matches);
-          console.groupEnd();
-
-          matches.forEach(index, match)
-
-          targetString = that.templater[foundedKey]
-
-          return that.regulars[foundedKey].replaceHandler(matches);
+          return that.templater.generate(foundedKey, matches)
         });
         return parse_recoursive(latex);
       } else {
