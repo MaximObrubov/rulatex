@@ -6,8 +6,7 @@
 ;(function ($) {
 
   if (window.RuLatex) {
-    var ruLatex = new RuLatex(),
-        $mainBlock = $(".js-main-block"),
+    var $mainBlock = $(".js-main-block"),
         testLatex = [
           // "\\infty ∪ℤℝℚℕπ∈∫→←⇒⇔∅",
           // "\\left\\{-\\infty; 2\\right]\\cup{3}\\cup(8;+\\infty)",
@@ -25,10 +24,11 @@
     for (let i = 0, l = testLatex.length; i < l; i++) {
       let $line = $("<div class='line'>"),
           $left = $("<div class='left'>"),
-          $right = $("<div class='right'>");
+          $right = $("<div class='right'>"),
+          formula = new RuLatex(testLatex[i]);
 
       $left.append(testLatex[i]);
-      $right.append(ruLatex.parse(testLatex[i]));
+      $right.append(formula.view);
       $line
         .append($left)
         .append($right)

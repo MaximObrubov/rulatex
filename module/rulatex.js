@@ -1,20 +1,28 @@
 import { Parser } from './classes/parser.js';
-import { Parser } from './classes/tree.js';
+import { Tree } from './classes/tree.js';
 // подключаем css, требование webpack
 import './rulatex.scss';
 
 
 class RuLatex {
-  constructor() {
+  constructor(latex) {
     this.parser = new Parser();
-    this.tree = new Tree();
-  }
+    this.view = document.createElement("div");
 
-  parse(latex) {
     if (this.parser) {
-      return this.wrap(this.parser.parse(latex));
+      let html = this.parser.parse(latex);
+
+      if (html) {
+        this.view.className = "rl-main";
+        this.view.innerHTML = html;
+        this.view.setAttribute("data-id", 0);
+        this.tree = new Tree(this);
+      } else {
+        console.error("Parser sucks");
+      }
     } else {
-      console.info("Parser sucks");
+      console.error("Parser dead");
+      return false;
     }
   }
 

@@ -1,6 +1,6 @@
 class Templater {
   constructor() {
-    this.counter = 0;
+    this.counter = 1;
     this.templates = {
       "abs": "<div class=\"rl-bracket\">|</div>$m1<div class=\"rl-bracket\">|</div>",
       "brackets": "$m1$m2$m3",

@@ -2,7 +2,7 @@ import { Templater } from './templater.js';
 
 class Parser {
   constructor() {
-    this.templater = new Templater(rulatex);
+    this.templater = new Templater();
     this.regulars = {
       "abs": /\\left\|(((?!(\\left\||\\right\|)).)+)\\right\|/,
       "brackets": /\\left([\(\[])((?:(?!(?:\\left[\(\[]|\\right[\)\]])).)+)\\right([\)\]])/,
