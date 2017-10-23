@@ -1,4 +1,4 @@
-import { Parser } from './parser/parser.js';
+import { Parser } from './classes/parser.js';
 // подключаем css, требование webpack
 import './rulatex.scss';
 
