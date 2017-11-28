@@ -1,9 +1,10 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var WriteFilePlugin = require('write-file-webpack-plugin');
 
 module.exports = {
-  entry: './module/rulatex',
+  entry: './module/rulatex.js',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'rulatex-compiled.js'
@@ -12,10 +13,14 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        options: {
-          presets: ['es2015']
-        }
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['es2015']
+            }
+          }
+        ]
       },
       {
         test: /\.scss$/,
@@ -26,19 +31,28 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|svg|ttf|otf)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]'
-        }
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]'
+            }
+          }
+        ]
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('rulatex-compiled.css')
+    new ExtractTextPlugin('rulatex-compiled.css'),
+    new WriteFilePlugin()
   ],
   stats: {
     colors: true
   },
   devtool: 'eval',
-  watch: true
+  devServer: {
+    watchOptions: {
+      poll: true
+    }
+  }
 };

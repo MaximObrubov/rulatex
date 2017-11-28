@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "webpack",
-    "start": "static"
+    "start": "webpack-dev-server"
   },
   "author": "",
   "license": "ISC",
@@ -16,9 +15,10 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "node-sass": "^4.5.3",
-    "node-static": "^0.7.10",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "webpack": "^3.6.0"
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.5",
+    "write-file-webpack-plugin": "^4.2.0"
   }
 }
